@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 class Scratch {
     public static void main(String[] args) {
         // String format platform specific way to add new line : %n instead of \n
@@ -7,6 +11,9 @@ class Scratch {
 
         System.out.println(allUpper("Giri"));
         System.out.println(allLower("giri"));
+
+        System.out.println(":" + centerText("Giri", 11) + ":");
+        System.out.println(getMap("name=John age=30 city=NewYork"));
     }
 
     static boolean allUpper(String word) {
@@ -15,5 +22,25 @@ class Scratch {
 
     static boolean allLower(String word) {
         return word.chars().noneMatch(Character::isUpperCase);
+    }
+
+    /**
+     * Formats given string to be centered, the festest way.
+     * @param text
+     * @param width
+     * @return
+     */
+    static String centerText(String text, int width) {
+        int padding = (width - text.length()) / 2;
+        System.out.println("%" + padding + "s%s%" + padding + "s"); // %3s%s%3s
+        System.out.println(":" + String.format("%3s%s%3s", "", text, "") + ":"); // %3s%s%3s
+        return String.format("%" + padding + "s%s%" + padding + "s", "", text, "");
+    }
+
+    static Map getMap(String data) { // e.g "name=John age=30 city=NewYork"
+        return Arrays.stream(data.split(" "))
+                   .map(kv -> kv.split("="))
+                   .filter(kvArray -> kvArray.length == 2)
+                   .collect(Collectors.toMap(kv -> kv[0], kv -> kv[1]));
     }
 }
