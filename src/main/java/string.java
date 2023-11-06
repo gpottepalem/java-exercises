@@ -14,6 +14,7 @@ class Scratch {
 
         System.out.println(":" + centerText("Giri", 11) + ":");
         System.out.println(getMap("name=John age=30 city=NewYork"));
+        System.out.println(capitalizeEachWord("my name is giri."));
     }
 
     static boolean allUpper(String word) {
@@ -37,10 +38,29 @@ class Scratch {
         return String.format("%" + padding + "s%s%" + padding + "s", "", text, "");
     }
 
+    /**
+     * Returns Map from a given string of key=value pairs separated by space.
+     * @param data
+     * @return
+     */
     static Map getMap(String data) { // e.g "name=John age=30 city=NewYork"
         return Arrays.stream(data.split(" "))
                    .map(kv -> kv.split("="))
                    .filter(kvArray -> kvArray.length == 2)
                    .collect(Collectors.toMap(kv -> kv[0], kv -> kv[1]));
+    }
+
+    /**
+     * Capitalizesevery word in a given sentence
+     * @param sentense
+     * @return
+     */
+    static String capitalizeEachWord(String sentense) {
+        if (sentense == null || input.isEmpty()) {
+            return null;
+        }
+        return Arrays.stream(sentense.split("\\s+"))
+                   .map(word -> Character.toUpperCase(word.charAt(0)) + word.substring(1))
+                   .collect(Collectors.joining(" "));
     }
 }
